@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
             uniqueness: true
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, 
+  validates :email, presence: true,
   					format: { with: VALID_EMAIL_REGEX },
   					uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
 
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
+  end
+
+  def spiral_name
+    "@#{username}"
   end
 
   private

@@ -2,8 +2,11 @@
   <%= gravatar_for current_user, size: 52 %>
 </a>
 <h1>
-  <%= current_user.name %>
+  <%= current_user.spiral_name %>
 </h1>
+<p1>
+  <%= current_user.name %>
+</p1>
 <span>
   <%= link_to "view my profile", current_user %>
 </span>

@@ -16,7 +16,7 @@ def make_users
   admin.toggle!(:admin)
   99.times do |n|
     name  = Faker::Name.name
-    username = Faker::Name.name
+    username = Faker::Name.name.gsub(" ","_")
     email = "example-#{n+1}@railstutorial.org"
     password  = "password"
     User.create!(name:     name,
@@ -29,8 +29,11 @@ end
 
 def make_microposts
   users = User.all(limit: 6)
-  50.times do
+  50.times do |n|
     content = Faker::Lorem.sentence(5)
+    if (n+1)%10 == 0
+      content = "@Admin #{content}"
+    end
     users.each { |user| user.microposts.create!(content: content) }
   end
 end
