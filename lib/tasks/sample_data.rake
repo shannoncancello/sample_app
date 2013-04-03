@@ -1,6 +1,8 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    User.destroy_all
+    Micropost.destroy_all
     make_users
     make_microposts
     make_relationships
@@ -28,13 +30,16 @@ def make_users
 end
 
 def make_microposts
+  admin = User.find_by_username "Admin"
   users = User.all(limit: 6)
   50.times do |n|
-    content = Faker::Lorem.sentence(5)
+    attribs = {}
+    attribs[:content] = Faker::Lorem.sentence(5)
     if (n+1)%10 == 0
-      content = "@Admin #{content}"
+      attribs[:content] = "@Admin #{attribs[:content]}"
+      attribs[:in_reply_to] = admin.id
     end
-    users.each { |user| user.microposts.create!(content: content) }
+    users.each { |user| user.microposts.create!(attribs) }
   end
 end
 
