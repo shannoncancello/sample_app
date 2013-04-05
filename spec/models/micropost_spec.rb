@@ -81,7 +81,7 @@ describe Micropost do
 
   describe "#extract_private" do
     context "when a micropost is private" do
-      before { @micropost.content = "d what's up?" }
+      before { @micropost.content = "d @test_user what's up?" }
       it "should change the private field" do
         @micropost.send(:extract_private)
         @micropost.private.should == true

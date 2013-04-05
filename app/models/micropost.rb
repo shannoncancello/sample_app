@@ -1,6 +1,6 @@
 class Micropost < ActiveRecord::Base
   REPLY_TO_REGEX = /\A@([^\s]*)/
-  PRIVATE_REGEX = /\A[dD]\s/
+  PRIVATE_REGEX = /\A[dD]\s*@([^\s]*)/
 
   attr_accessible :content, :in_reply_to, :private
   belongs_to :user
@@ -31,7 +31,7 @@ class Micropost < ActiveRecord::Base
   def self.from_users_followed_by_private_only(user)
     followed_user_ids = "SELECT followed_id FROM relationships
                          WHERE follower_id = :user_id"
-    where("user_id IN (#{followed_user_ids} AND prive = 1 OR user_id = :user_id AND private = 1")
+    where("user_id = :user_id AND in_reply_to => !nil AND private = 1 OR in_reply_to = :user_id AND private = 1")
   end
 
   private
@@ -46,8 +46,10 @@ class Micropost < ActiveRecord::Base
   end
 
   def extract_private
-    if content[PRIVATE_REGEX]
-      self.private = true
+    if self.in_reply_to = !nil
+      if content[PRIVATE_REGEX]
+        self.private = true
+      end
     end
   end
 end
