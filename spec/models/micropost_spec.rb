@@ -15,7 +15,7 @@ describe Micropost do
   its(:user) { should == user }
 
   it { should be_valid }
- 
+
   describe "when user_id is not present" do
     before { @micropost.user_id = nil }
     it { should_not be_valid }
@@ -40,8 +40,8 @@ describe Micropost do
   end
 
   describe "#self.from_users_followed_by_including_replies" do
-    let(:recipient){ FactoryGirl.create(:user, username: "recipient") }
-    let(:sender) { FactoryGirl.create(:user, username: "sender") }
+    let!(:recipient){ FactoryGirl.create(:user, username: "recipient") }
+    let!(:sender) { FactoryGirl.create(:user, username: "sender") }
     before { @mp = sender.microposts.create(content: "@recipient something", in_reply_to: recipient.id)}
 
     it "for 'recipient', microposts should include the 'sender's micropost" do
@@ -51,9 +51,9 @@ describe Micropost do
 
   # good info about testing callbacks:
   # https://makandracards.com/makandra/725-test-activerecord-callbacks-with-rspec
-  
+
   let!(:mentioned_user) { FactoryGirl.create(:user, username: "test_user") }
-  
+
   describe "#extract_in_reply_to" do
     context "when a user is mentioned" do
       before { @micropost.content = "@test_user hey ho hey" }
@@ -87,7 +87,7 @@ describe Micropost do
         @micropost.private.should == true
       end
     end
-  
+
     context "when a micropost is not private" do
       before { @micropost.content = "yo yo yo" }
       it "should not change the private field" do

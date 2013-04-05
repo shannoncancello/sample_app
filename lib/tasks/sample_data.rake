@@ -31,7 +31,7 @@ end
 
 def make_microposts
   admin = User.find_by_username "Admin"
-  users = User.all(limit: 6)
+  users = User.limit(6)
   50.times do |n|
     attribs = {}
     attribs[:content] = Faker::Lorem.sentence(5)
@@ -41,7 +41,7 @@ def make_microposts
     elsif (n+1)%4 == 0
       attribs[:content] = "d @Admin #{attribs[:content]}"
       attribs[:in_reply_to] = admin.id
-      attribs[:private] = 1
+      attribs[:direct_message] = true
     end
     users.each { |user| user.microposts.create!(attribs) }
   end
