@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     Micropost.from_users_followed_by_including_replies(self)
   end
 
+  def private_messages
+    Micropost.from_users_followed_by_private_only(self)
+  end
+
   def following?(other_user)
     relationships.find_by_followed_id(other_user.id)
   end

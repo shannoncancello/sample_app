@@ -38,6 +38,9 @@ def make_microposts
     if (n+1)%10 == 0
       attribs[:content] = "@Admin #{attribs[:content]}"
       attribs[:in_reply_to] = admin.id
+    elsif (n+1)%4 == 0
+      attribs[:content] = "d #{attribs[:content]}"
+      attribs[:private] = 1
     end
     users.each { |user| user.microposts.create!(attribs) }
   end

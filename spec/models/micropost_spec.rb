@@ -11,6 +11,7 @@ describe Micropost do
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
   it { should respond_to(:in_reply_to) }
+  it { should respond_to(:private) }
   its(:user) { should == user }
 
   it { should be_valid }
@@ -75,6 +76,24 @@ describe Micropost do
     it "should run the proper callbacks" do
       @micropost.should_receive(:extract_in_reply_to)
       @micropost.run_callbacks(:save)
+    end
+  end
+
+  describe "#extract_private" do
+    context "when a micropost is private" do
+      before { @micropost.content = "d what's up?" }
+      it "should change the private field" do
+        @micropost.send(:extract_private)
+        @micropost.private.should == true
+      end
+    end
+  
+    context "when a micropost is not private" do
+      before { @micropost.content = "yo yo yo" }
+      it "should not change the private field" do
+        @micropost.send(:extract_private)
+        @micropost.private.should be false
+      end
     end
   end
 end
