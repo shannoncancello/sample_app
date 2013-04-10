@@ -1,7 +1,6 @@
 SampleApp::Application.routes.draw do
-  get "direct_messages/index"
 
-  get "direct_messages/show"
+  resources :conversations, only: [:index, :show]
 
   resources :users do
     member do

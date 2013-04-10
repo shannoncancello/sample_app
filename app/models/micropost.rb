@@ -32,6 +32,16 @@ class Micropost < ActiveRecord::Base
       user_id: user.id, dm_value: true)
   end
 
+  def self.direct_message_participants(user)
+    ids = Micropost.direct_messages(user).map(&:user_id).uniq + Micropost.direct_messages(user).map(&:in_reply_to).uniq - [user.id]
+    User.where(id: ids)
+  end
+
+  def self.conversation(user1_id, user2_id)
+   where(direct_message: true).
+   where("(user_id = :user1_id AND in_reply_to = :user2_id) OR (user_id = :user2_id AND in_reply_to = :user1_id)", user1_id: user1_id, user2_id: user2_id)
+  end
+
   private
 
   def extract_in_reply_to

@@ -1,0 +1,5 @@
+<h1>Conversation Participants.</h1>
+<p>Click one to view the converstation.</p>
+<% @participants.each do |participant| %>
+  <%= link_to "#{participant.name} (#{participant.spiral_name})", conversation_path(participant.id) %> <br>
+<% end %>

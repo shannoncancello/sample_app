@@ -79,21 +79,21 @@ describe Micropost do
     end
   end
 
-  describe "#extract_private" do
-    context "when a micropost is private" do
-      before { @micropost.content = "d @test_user what's up?" }
-      it "should change the private field" do
-        @micropost.send(:extract_private)
-        @micropost.private.should == true
-      end
-    end
+  # describe "#extract_private" do
+  #   context "when a micropost is private" do
+  #     before { @micropost.content = "d @test_user what's up?" }
+  #     it "should change the private field" do
+  #       @micropost.send(:extract_private)
+  #       @micropost.private.should == true
+  #     end
+  #   end
 
-    context "when a micropost is not private" do
-      before { @micropost.content = "yo yo yo" }
-      it "should not change the private field" do
-        @micropost.send(:extract_private)
-        @micropost.private.should be false
-      end
-    end
-  end
+  #   context "when a micropost is not private" do
+  #     before { @micropost.content = "yo yo yo" }
+  #     it "should not change the private field" do
+  #       @micropost.send(:extract_private)
+  #       @micropost.private.should be false
+  #     end
+  #   end
+  # end
 end
