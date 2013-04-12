@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   def feed
     # This is preliminary. See "Following users" for the full implementation.
     # Micropost.from_users_followed_by(self)
-    Micropost.from_users_followed_by_including_replies(self)
+    Micropost.from_users_follwed_by_excluding_direct_messages(self) 
   end
 
   def private_messages
