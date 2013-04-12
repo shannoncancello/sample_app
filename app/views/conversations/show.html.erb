@@ -2,7 +2,7 @@
   <div class="row">
     <aside class="span4">
       <section>
-        <%= render 'shared/micropost_form' %>
+        <%= render partial: 'shared/micropost_form', locals: { dm_target: @dm_target }  %>
       </section>
     </aside>
     <div class="span8">

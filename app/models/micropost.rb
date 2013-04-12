@@ -7,10 +7,15 @@ class Micropost < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
+  # validates :content, format: {with: /heyheyheyheyhey/ , message: "is the worst ever"}
 
   default_scope order: 'microposts.created_at DESC'
 
   before_save :extract_in_reply_to
+
+  def in_reply_to_user
+    User.find(in_reply_to) if in_reply_to
+  end
 
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships

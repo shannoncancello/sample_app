@@ -8,6 +8,7 @@ class ConversationsController < ApplicationController
   def show
     @feed_items = Micropost.conversation(current_user.id, params[:id]).paginate(page: params[:page])
     @micropost  = current_user.microposts.build
+    @dm_target = User.find(params[:id])
   end
 
 end
